@@ -1,6 +1,8 @@
 package main
 
-import api "github.com/behdadzabihi/car-buying-selling-system/api/forms/handlers/middlewares/routers/validations"
+import "github.com/behdadzabihi/car-buying-selling-system/api"
+
+
 
 func main() {
 	api.InitServer()
