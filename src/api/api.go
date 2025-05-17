@@ -18,7 +18,7 @@ func InitServer(){
 
 	value,ok:=binding.Validator.Engine().(*validator.Validate)
 	if ok{
-		value.RegisterValidation("mobile",validations.IranianMobileNumberValidation,true)
+		value.RegisterValidation("mobile",validations.IranianMobileNumberValidator,true)
 	}
 
 	
