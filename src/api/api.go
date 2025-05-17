@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 
+	"github.com/behdadzabihi/car-buying-selling-system/api/middlewares"
 	"github.com/behdadzabihi/car-buying-selling-system/api/routers"
 	"github.com/behdadzabihi/car-buying-selling-system/api/validations"
 	"github.com/behdadzabihi/car-buying-selling-system/config"
@@ -22,6 +23,7 @@ func InitServer(){
 	}
 
 	
+	// r.Use(gin.Logger(),gin.Recovery(),middlewares.TestMiddleware(),middlewares.LimitByRequest())
 	r.Use(gin.Logger(),gin.Recovery())
 	api:=r.Group("/api")
 	v1:= api.Group("/v1")
