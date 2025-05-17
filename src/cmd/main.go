@@ -9,6 +9,9 @@ import (
 	"github.com/behdadzabihi/car-buying-selling-system/src/data/db"
 )
 
+// @securityDefinitions.apikey AuthBearer
+// @in header
+// @name Authorization
 func main() {
 	cfg := config.GetConfig()
 	api.InitServer(cfg)
