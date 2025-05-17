@@ -27,6 +27,7 @@ redis:
   writeTimeout: 5
   poolSize: 10
   poolTimeout: 15
+  idleTimeout: 500
   idleCheckFrequency: 500
 password:
   includeChars: true

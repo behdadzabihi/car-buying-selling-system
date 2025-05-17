@@ -42,6 +42,7 @@ type RedisConfig struct {
 	DialTimeout        time.Duration
 	ReadTimeout        time.Duration
 	WriteTimeout       time.Duration
+	IdleTimeout        time.Duration
 	IdleCheckFrequency time.Duration
 	PoolSize           int
 	PoolTimeout        time.Duration
