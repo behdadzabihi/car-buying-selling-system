@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/behdadzabihi/car-buying-selling-system/api/handlers"
+	"github.com/behdadzabihi/car-buying-selling-system/src/api/handlers"
 	"github.com/gin-gonic/gin"
 )
 

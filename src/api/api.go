@@ -3,10 +3,9 @@ package api
 import (
 	"fmt"
 
-	"github.com/behdadzabihi/car-buying-selling-system/api/middlewares"
-	"github.com/behdadzabihi/car-buying-selling-system/api/routers"
-	"github.com/behdadzabihi/car-buying-selling-system/api/validations"
-	"github.com/behdadzabihi/car-buying-selling-system/config"
+	"github.com/behdadzabihi/car-buying-selling-system/src/api/routers"
+	"github.com/behdadzabihi/car-buying-selling-system/src/api/validations"
+	"github.com/behdadzabihi/car-buying-selling-system/src/config"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
