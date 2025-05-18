@@ -33,33 +33,18 @@ services:
     depends_on:
       - postgres
 
+
   redis:
     image: redis:latest
     container_name: redis_container
-    command: ["redis-server", "/etc/redis/redis.conf"]
+    command: ["redis-server", "etc/redis/redis.conf"]
     volumes:
-    - ./docker/redis/redis.conf:/etc/redis/redis.conf
-    - redis:/data
+      - src/docker/redis/redis.conf:/etc/redis/redis.conf
+      - redis:/etc/redis.conf
     ports:
-    - "6379:6379"
+      - "6379:6379"
     networks:
-    - webapi_network
-  # car_buying_selling:
-  #   build: .
-  #   container_name: car_app_container
-  #   environment:
-  #     - APP_ENV=docker
-  #   volumes:
-  #     - ./config:/app/config
-  #     - logs:/app/logs
-  #   ports:
-  #     - "5005:5005"
-  #   depends_on:
-  #     - postgres
-  #     - redis
-  #   networks:
-  #     - webapi_network
-
+     - webapi_network
 
 volumes:
   postgres:

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
 
 	"github.com/behdadzabihi/car-buying-selling-system/src/api"
 	"github.com/behdadzabihi/car-buying-selling-system/src/config"
 	"github.com/behdadzabihi/car-buying-selling-system/src/data/cache"
 	"github.com/behdadzabihi/car-buying-selling-system/src/data/db"
+	"github.com/behdadzabihi/car-buying-selling-system/src/pkg/logging"
 )
 
 // @securityDefinitions.apikey AuthBearer
@@ -14,16 +14,16 @@ import (
 // @name Authorization
 func main() {
 	cfg := config.GetConfig()
-	api.InitServer(cfg)
+	logger := logging.NewLogger(cfg)
 	defer cache.CloseRedis()
 	err := cache.InitRedis(cfg)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
 	}
 	err = db.InitDb(cfg)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
-
+	api.InitServer(cfg)
 }
