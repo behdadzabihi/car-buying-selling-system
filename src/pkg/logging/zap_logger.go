@@ -7,16 +7,14 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-
 var zapSinLogger *zap.SugaredLogger
 
-
-type zapLogger struct{
-	cfg *config.Config
+type zapLogger struct {
+	cfg    *config.Config
 	logger *zap.SugaredLogger
 }
 
-var logLevelMap=map[string]zapcore.Level{
+var logLevelMap = map[string]zapcore.Level{
 	"debug": zapcore.DebugLevel,
 	"info":  zapcore.InfoLevel,
 	"warn":  zapcore.WarnLevel,
@@ -24,15 +22,15 @@ var logLevelMap=map[string]zapcore.Level{
 	"fatal": zapcore.FatalLevel,
 }
 
-func newZapLogger(cfg *config.Config) *zapLogger{
-	logger := &zapLogger{cfg:cfg}
+func newZapLogger(cfg *config.Config) *zapLogger {
+	logger := &zapLogger{cfg: cfg}
 	logger.Init()
 	return logger
 }
 
-func (l * zapLogger) getLogLevel() zapcore.Level{
-	level,exist:=logLevelMap[l.cfg.Logger.Level]
-	if !exist{
+func (l *zapLogger) getLogLevel() zapcore.Level {
+	level, exist := logLevelMap[l.cfg.Logger.Level]
+	if !exist {
 		return zapcore.DebugLevel
 	}
 	return level
@@ -40,6 +38,7 @@ func (l * zapLogger) getLogLevel() zapcore.Level{
 }
 
 func (l *zapLogger) Init() {
+	once.Do(func() {
 		w := zapcore.AddSync(&lumberjack.Logger{
 			Filename:   l.cfg.Logger.FilePath,
 			MaxSize:    1,
@@ -58,9 +57,11 @@ func (l *zapLogger) Init() {
 			l.getLogLevel(),
 		)
 		logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1),
-		zap.AddStacktrace(zapcore.ErrorLevel)).Sugar()
-		l.logger = logger
-	}
+			zap.AddStacktrace(zapcore.ErrorLevel)).Sugar()
+		zapSinLogger = logger.With("AppName", "MyApp", "LoggerName", "Zaplog")
+	})
+	l.logger = zapSinLogger
+}
 
 func (l *zapLogger) Debug(cat Category, sub SubCategory, msg string, extra map[ExtraKey]interface{}) {
 	params := prepareLogInfo(cat, sub, extra)
@@ -114,5 +115,5 @@ func prepareLogInfo(cat Category, sub SubCategory, extra map[ExtraKey]interface{
 	extra["Category"] = cat
 	extra["SubCategory"] = sub
 
-	return mapToZapParams(extra)
+	return logParamsToZapParams(extra)
 }
